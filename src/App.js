@@ -5,7 +5,7 @@ import { listNotes } from './graphql/queries';
 import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
 import { API, Storage } from 'aws-amplify';
 
-const initialFormState = { name: '', description: '' }
+const initialFormState = { name: '', description: ''}
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -53,9 +53,12 @@ function App() {
     fetchNotes();
   }
 
+  
+
   return (
     <div className="App">
-      <h1>My Notes App</h1>
+      <h1 class="bannerText">Daily Fitness Tracker</h1>
+      <div id="signout"><AmplifySignOut/></div>
       <input
         onChange={e => setFormData({ ...formData, 'name': e.target.value})}
         placeholder="Note name"
@@ -68,24 +71,24 @@ function App() {
       />
       <input
       type="file"
-      onChange={onChange}
-      />
+      onChange={onChange}/>
       <button onClick={createNote}>Create Note</button>
-      <div style={{marginBottom: 30}}>
+      <div style={{marginBottom: 50}}>
         {
           notes.map(note => (
             <div key={note.id || note.name}>
-              <h2>{note.name}</h2>
+              <p>==================================================================<br/></p>
+              <h2 id="noteName">{note.name}</h2>
               <p>{note.description}</p>
-              <button onClick={() => deleteNote(note)}>Delete note</button>
               {
-                note.image && <img src={note.image} style={{width: 400}} alt=""/>
+                note.image && <img class="imagePlacement" src={note.image} style={{width: 600}} alt=""/>
               }
+              <div/>
+              <button onClick={() => deleteNote(note)}>Delete note</button>
             </div>
           ))
         }
       </div>
-      <AmplifySignOut />
     </div>
   );
 }
